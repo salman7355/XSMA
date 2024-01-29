@@ -2,17 +2,19 @@ import { DarkTheme, NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import Search from "./screens/Search";
-import Profile from "./screens/Profile";
+
 import { TabBar } from "react-native-tab-view";
 import { Ionicons } from "@expo/vector-icons";
 import { Text, View, useColorScheme } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import Button from "./Components/Button";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import Navbar from "./Components/Navbar";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MovieDetails from "./screens/StackScreens/MovieDetails";
 import Home from "./screens/Home";
+import SeeAll from "./screens/StackScreens/SeeAll";
+import WatchList from "./screens/WatchList";
 
 //Stack Navigator
 const HomeStack = createNativeStackNavigator();
@@ -30,8 +32,34 @@ const StackGroup = () => {
       <HomeStack.Screen
         name="MovieDetails"
         component={MovieDetails}
-        options={{ presentation: "modal" }}
+        options={{
+          presentation: "modal",
+          //  headerShown: false
+          headerTransparent: true,
+          headerTitle: "",
+        }}
       />
+      <HomeStack.Screen
+        name="SeeAll"
+        component={SeeAll}
+        options={{
+          headerTransparent: true,
+          headerTintColor: "gray",
+          headerRight: () => {
+            return (
+              <Ionicons
+                name="search"
+                size={24}
+                color="white"
+                style={{
+                  paddingRight: 10,
+                  paddingTop: 5,
+                }}
+              />
+            );
+          },
+        }}
+      ></HomeStack.Screen>
     </HomeStack.Navigator>
   );
 };
@@ -48,8 +76,8 @@ const TabGroup = () => {
             iconName = focused ? "home" : "home-outline";
           } else if (route.name === "Search") {
             iconName = focused ? "search-sharp" : "search-outline";
-          } else if (route.name === "Profile") {
-            iconName = focused ? "person-sharp" : "person-outline";
+          } else if (route.name === "WatchList") {
+            iconName = focused ? "bookmark" : "bookmark-outline";
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;
@@ -78,7 +106,7 @@ const TabGroup = () => {
         component={Home}
       />
       <Tab.Screen name="Search" component={Search} />
-      <Tab.Screen name="Profile" component={Profile} />
+      <Tab.Screen name="WatchList" component={WatchList} />
     </Tab.Navigator>
   );
 };

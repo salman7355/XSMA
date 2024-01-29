@@ -24,7 +24,7 @@ const Home = () => {
         <FlatList
           showsVerticalScrollIndicator={false}
           data={VertArr}
-          renderItem={() => <Category />}
+          renderItem={(item) => <Category index={item.index} />}
           keyExtractor={(item) => item.id}
           ListHeaderComponent={<Poster />}
         />

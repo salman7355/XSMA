@@ -1,7 +1,9 @@
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import { StyleSheet, Text, View, FlatList, Pressable } from "react-native";
 import React from "react";
 import MovieCard from "../Components/MovieCard";
-const Category = () => {
+import { useNavigation } from "@react-navigation/native";
+const Category = ({ index }) => {
+  const { navigate } = useNavigation();
   const Arr = [
     {
       id: 1,
@@ -23,7 +25,14 @@ const Category = () => {
     <View style={styles.category}>
       <View style={styles.categoryTitle}>
         <Text style={styles.categoryName}>Trending</Text>
-        <Text style={styles.seeAll}>See all</Text>
+        <Text
+          onPress={() => {
+            navigate("SeeAll", { index });
+          }}
+          style={styles.seeAll}
+        >
+          See all
+        </Text>
       </View>
       <FlatList
         showsHorizontalScrollIndicator={false}
