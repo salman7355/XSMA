@@ -7,15 +7,19 @@ const Home = () => {
   const VertArr = [
     {
       id: 1,
+      name: "Trending",
     },
     {
       id: 2,
+      name: "Top Rated",
     },
     {
       id: 3,
+      name: "New Release",
     },
     {
       id: 4,
+      name: "Popular",
     },
   ];
   return (
@@ -24,7 +28,9 @@ const Home = () => {
         <FlatList
           showsVerticalScrollIndicator={false}
           data={VertArr}
-          renderItem={(item) => <Category index={item.index} />}
+          renderItem={(item) => (
+            <Category index={item.item.id} name={item.item.name} />
+          )}
           keyExtractor={(item) => item.id}
           ListHeaderComponent={<Poster />}
         />

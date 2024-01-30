@@ -105,8 +105,18 @@ const TabGroup = () => {
         name="Home"
         component={Home}
       />
-      <Tab.Screen name="Search" component={Search} />
-      <Tab.Screen name="WatchList" component={WatchList} />
+      <Tab.Screen
+        name="Search"
+        component={Search}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="WatchList"
+        component={WatchList}
+        options={{
+          headerTransparent: true,
+        }}
+      />
     </Tab.Navigator>
   );
 };
