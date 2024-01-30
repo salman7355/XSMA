@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, FlatList, Pressable } from "react-native";
+import { StyleSheet, Text, View, FlatList } from "react-native";
 import React from "react";
 import MovieCard from "../Components/MovieCard";
 import { useNavigation } from "@react-navigation/native";
@@ -38,7 +38,9 @@ const Category = ({ index, name }) => {
         showsHorizontalScrollIndicator={false}
         horizontal={true}
         data={Arr}
-        renderItem={(item) => <MovieCard movie={item.index} />}
+        renderItem={(item) => (
+          <MovieCard movie={item.index} width={120} height={160} />
+        )}
         keyExtractor={(item) => item.id}
       ></FlatList>
     </View>

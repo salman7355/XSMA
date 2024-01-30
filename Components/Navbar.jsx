@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 
 const Navbar = () => {
   const { navigate } = useNavigation();
+  const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.nav}>
       <Text style={styles.text}>S</Text>
@@ -18,7 +19,12 @@ const Navbar = () => {
           size={30}
           color="white"
         />
-        <Ionicons name="person-circle-outline" size={30} color="white" />
+        <Ionicons
+          name="person-circle-outline"
+          size={30}
+          color="white"
+          onPress={() => navigation.openDrawer()}
+        />
       </View>
     </SafeAreaView>
   );

@@ -1,5 +1,5 @@
 import { Image, StyleSheet, Text, View } from "react-native";
-import React, { useLayoutEffect } from "react";
+import React from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -7,13 +7,6 @@ const MovieDetails = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const { params } = route;
-
-  // useLayoutEffect(() => {
-  //   navigation.setOptions({
-  //     // headerTitle: params.movie,
-  //     // headerShown: false,
-  //   });
-  // },[]);
 
   return (
     <View style={styles.container}>

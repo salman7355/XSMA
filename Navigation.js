@@ -1,24 +1,41 @@
 import { DarkTheme, NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
 import Search from "./screens/Search";
-
-import { TabBar } from "react-native-tab-view";
 import { Ionicons } from "@expo/vector-icons";
-import { Text, View, useColorScheme } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import Button from "./Components/Button";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import Navbar from "./Components/Navbar";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MovieDetails from "./screens/StackScreens/MovieDetails";
 import Home from "./screens/Home";
 import SeeAll from "./screens/StackScreens/SeeAll";
 import WatchList from "./screens/WatchList";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import Profile from "./screens/Profile";
+
+//Drawer Navigation
+const Drawer = createDrawerNavigator();
+const DrawerGroup = () => {
+  return (
+    <Drawer.Navigator
+      screenOptions={{
+        headerShown: false,
+        drawerActiveTintColor: "red",
+        headerTintColor: "#DEE4E7",
+        headerTransparent: true,
+      }}
+    >
+      <Drawer.Screen name="Home" component={StackGroup} />
+      <Drawer.Screen
+        name="Profile"
+        component={Profile}
+        options={{ headerShown: true }}
+      />
+    </Drawer.Navigator>
+  );
+};
 
 //Stack Navigator
 const HomeStack = createNativeStackNavigator();
-
 const StackGroup = () => {
   return (
     <HomeStack.Navigator>
@@ -115,6 +132,15 @@ const TabGroup = () => {
         component={WatchList}
         options={{
           headerTransparent: true,
+          headerTitleContainerStyle: {
+            paddingLeft: 13,
+            height: 70,
+          },
+          headerTitleStyle: {
+            fontSize: 20,
+            fontWeight: "500",
+            color: "#DEE4E7",
+          },
         }}
       />
     </Tab.Navigator>
@@ -125,7 +151,7 @@ export default Navigation = () => {
   return (
     <NavigationContainer theme={DarkTheme}>
       <StatusBar style="light" />
-      <StackGroup />
+      <DrawerGroup />
     </NavigationContainer>
   );
 };

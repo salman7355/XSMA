@@ -1,14 +1,6 @@
-import {
-  FlatList,
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
-import React, { useLayoutEffect } from "react";
-import { useNavigation, useRoute } from "@react-navigation/native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 
 const MovieSearchCard = ({ btnHidden, movie }) => {

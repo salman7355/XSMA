@@ -1,15 +1,18 @@
-import { StyleSheet, View, Image, Pressable } from "react-native";
+import { StyleSheet, Image, Pressable } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 
-const MovieCard = ({ movie }) => {
+const MovieCard = ({ movie, width, height }) => {
   const { navigate } = useNavigation();
   return (
     <Pressable
       onPress={() => {
         navigate("MovieDetails", { movie });
       }}
-      style={styles.movie}
+      style={{
+        width: width,
+        height: height,
+      }}
     >
       <Image
         style={styles.movieImage}
@@ -22,10 +25,6 @@ const MovieCard = ({ movie }) => {
 export default MovieCard;
 
 const styles = StyleSheet.create({
-  movie: {
-    width: 120,
-    height: 160,
-  },
   movieImage: {
     width: "100%",
     height: "100%",
