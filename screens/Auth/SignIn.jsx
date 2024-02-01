@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, View, TextInput } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -76,24 +76,6 @@ const styles = StyleSheet.create({
   login: {
     paddingTop: 50,
     gap: 30,
-  },
-  emailContainer: {
-    gap: 10,
-  },
-  txt: {
-    color: "#DEE4E7",
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: "500",
-  },
-  input: {
-    width: 315,
-    borderWidth: 1,
-    height: 50,
-    borderRadius: 15,
-    paddingLeft: 20,
-    borderColor: "#DEE4E7",
   },
   remember: {
     flexDirection: "row",

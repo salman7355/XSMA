@@ -1,11 +1,28 @@
 import { Image, StyleSheet, Text, View, TextInput } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import SignBtn from "../../Components/SignBtn";
 import UserSignInput from "../../Components/UserSignInput";
+import { Ionicons } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
 
 const SignUp = () => {
+  const [image, setImage] = useState(null);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.loginLogo}>
@@ -23,26 +40,45 @@ const SignUp = () => {
         style={styles.loginDetails}
       >
         <View style={styles.login}>
+          <View style={styles.imgContainer}>
+            {image ? (
+              <Image
+                source={{ uri: image }}
+                style={{ width: "100%", height: "100%", borderRadius: 37.5 }}
+              />
+            ) : (
+              <View style={styles.imgContainer}>
+                <Ionicons name="person-outline" size={35} color="black" />
+                <Ionicons
+                  style={styles.camera}
+                  name="camera-outline"
+                  size={24}
+                  color="black"
+                  onPress={pickImage}
+                />
+              </View>
+            )}
+          </View>
           <UserSignInput text="Name" />
           <UserSignInput text="Email" />
           <UserSignInput text="Password" />
 
           {/* image Picker */}
-          <View style={styles.emailContainer}>
+          {/* <View style={styles.emailContainer}>
             <Text style={[styles.label, styles.txt]}>Image</Text>
             <TextInput
               style={[styles.input, styles.txt]}
               placeholder="Upload your Image"
               placeholderTextColor="#DEE4E7"
             />
-          </View>
+          </View> */}
           <SignBtn text="Sign up" />
-          <View style={styles.signupp}>
+          {/* <View style={styles.signupp}>
             <Text style={[styles.signuptxt, styles.txt]}>
               Already have an account !!
             </Text>
             <Text style={styles.signuptxt}>Sign in</Text>
-          </View>
+          </View> */}
         </View>
       </LinearGradient>
     </View>
@@ -57,6 +93,22 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     alignItems: "center",
     justifyContent: "space-between",
+  },
+  imgContainer: {
+    width: 75,
+    height: 75,
+    backgroundColor: "gray",
+    alignSelf: "center",
+    borderRadius: 37.5,
+    // borderWidth: 2,
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
+  },
+  camera: {
+    position: "absolute",
+    bottom: -5,
+    right: 0,
   },
   loginLogo: {
     alignItems: "center",
@@ -81,7 +133,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
   },
   login: {
-    paddingTop: 50,
+    paddingTop: 40,
     gap: 30,
   },
   emailContainer: {
