@@ -13,8 +13,6 @@ import UserSignInput from "../../Components/UserSignInput";
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import { useNavigation } from "@react-navigation/native";
-// import { FIREBASE_AUTH } from "../../FirebaseConfig";
-// import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const SignUp = () => {
   const { navigate } = useNavigation();
@@ -23,20 +21,6 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [responseData, setResponseData] = useState(null);
   const [loading, setLoading] = useState(false);
-  // const auth = FIREBASE_AUTH;
-
-  // const signup = async () => {
-  //   setLoading(true);
-  //   try {
-  //     const res = await createUserWithEmailAndPassword(auth, email, password);
-  //     console.log(res);
-  //     navigate("SignIn");
-  //   } catch (error) {
-  //     console.log(error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -45,7 +29,6 @@ const SignUp = () => {
       aspect: [4, 3],
       quality: 1,
     });
-    console.log(result);
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);

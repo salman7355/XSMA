@@ -1,9 +1,29 @@
 import { StyleSheet, Text, View, FlatList } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MovieCard from "../Components/MovieCard";
 import { useNavigation } from "@react-navigation/native";
-const Category = ({ index, name }) => {
+import { API_KEY } from "@env";
+
+const Category = ({ index, name, apiName }) => {
   const { navigate } = useNavigation();
+  const [categoryy, setCategory] = useState(null);
+
+  const fetchCategories = async (name) => {
+    try {
+      const res = await fetch(
+        `https://api.themoviedb.org/3/movie/${name}?language=en-US&page=1&api_key=${API_KEY}`
+      );
+      const { results } = await res.json();
+      setCategory(results);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories(apiName);
+  }, []);
+
   const Arr = [
     {
       id: 1,
@@ -22,28 +42,35 @@ const Category = ({ index, name }) => {
     },
   ];
   return (
-    <View style={styles.category}>
-      <View style={styles.categoryTitle}>
-        <Text style={styles.categoryName}>{name}</Text>
-        <Text
-          onPress={() => {
-            navigate("SeeAll", { name });
-          }}
-          style={styles.seeAll}
-        >
-          See all
-        </Text>
+    categoryy && (
+      <View style={styles.category}>
+        <View style={styles.categoryTitle}>
+          <Text style={styles.categoryName}>{name}</Text>
+          <Text
+            onPress={() => {
+              navigate("SeeAll", { name });
+            }}
+            style={styles.seeAll}
+          >
+            See all
+          </Text>
+        </View>
+        <FlatList
+          showsHorizontalScrollIndicator={false}
+          horizontal={true}
+          data={Arr}
+          renderItem={(item) => (
+            <MovieCard
+              movie={item.index}
+              width={120}
+              height={160}
+              movies={categoryy[item.index]}
+            />
+          )}
+          keyExtractor={(item) => item.id}
+        ></FlatList>
       </View>
-      <FlatList
-        showsHorizontalScrollIndicator={false}
-        horizontal={true}
-        data={Arr}
-        renderItem={(item) => (
-          <MovieCard movie={item.index} width={120} height={160} />
-        )}
-        keyExtractor={(item) => item.id}
-      ></FlatList>
-    </View>
+    )
   );
 };
 
@@ -54,6 +81,7 @@ const styles = StyleSheet.create({
     height: 220,
     paddingLeft: 10,
     gap: 20,
+    // padding: 20,
   },
   categoryTitle: {
     flexDirection: "row",

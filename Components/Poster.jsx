@@ -4,6 +4,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import Button from "../Components/Button";
 
 const Poster = () => {
+  
   return (
     <View style={styles.poster}>
       <Image

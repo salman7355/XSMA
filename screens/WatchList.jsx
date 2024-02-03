@@ -4,35 +4,21 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import MovieCard from "../Components/MovieCard";
 
 const WatchList = () => {
-  const arr = [
-    {
-      id: 1,
-    },
-    {
-      id: 2,
-    },
-    {
-      id: 3,
-    },
-    {
-      id: 4,
-    },
-    {
-      id: 5,
-    },
-    {
-      id: 6,
-    },
-  ];
+  const arr = [];
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.listContainer}>
         <FlatList
           data={arr}
           renderItem={(item) => (
-            <MovieCard movie={item.item.id} width={180} height={250} />
+            <MovieCard
+              movie={item.index}
+              width={180}
+              height={250}
+              movies={null}
+            />
           )}
-          keyExtractor={(e) => e.id}
+          keyExtractor={(e) => e.index}
           horizontal={false}
           numColumns={2}
           showsVerticalScrollIndicator={false}

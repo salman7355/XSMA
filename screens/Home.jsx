@@ -2,24 +2,29 @@ import { StyleSheet, View, FlatList } from "react-native";
 import React from "react";
 import Category from "../Components/Category";
 import Poster from "../Components/Poster";
+import { API_KEY } from "@env";
 
 const Home = () => {
   const VertArr = [
     {
       id: 1,
-      name: "Trending",
+      name: "Upcoming",
+      apiWord: "upcoming",
     },
     {
       id: 2,
       name: "Top Rated",
+      apiWord: "top_rated",
     },
     {
       id: 3,
-      name: "New Release",
+      name: "Now Playing",
+      apiWord: "now_playing",
     },
     {
       id: 4,
       name: "Popular",
+      apiWord: "popular",
     },
   ];
   return (
@@ -29,7 +34,11 @@ const Home = () => {
           showsVerticalScrollIndicator={false}
           data={VertArr}
           renderItem={(item) => (
-            <Category index={item.item.id} name={item.item.name} />
+            <Category
+              index={item.item.id}
+              name={item.item.name}
+              apiName={item.item.apiWord}
+            />
           )}
           keyExtractor={(item) => item.id}
           ListHeaderComponent={<Poster />}
