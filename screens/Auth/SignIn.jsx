@@ -12,6 +12,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import SignBtn from "../../Components/SignBtn";
 import UserSignInput from "../../Components/UserSignInput";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 // import { FIREBASE_AUTH } from "../../FirebaseConfig";
 // import { signInWithEmailAndPassword } from "firebase/auth";
 
@@ -36,32 +37,27 @@ const SignIn = () => {
   //   }
   // };
 
-  // const submit = async () => {
-  //   try {
-  //     // const api = "http://localhost:3001/login";
-  //     const response = await fetch("http://192.168.1.10:3000/login", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         email: email,
-  //         password: password,
-  //       }),
-  //     });
-  //     if (response.ok) {
-  //       const jsonResponse = await response.json();
-  //       setResponseData(jsonResponse);
-  //       console.log(jsonResponse);
-  //       navigate("DrawerGroup");
-  //     } else {
-  //       // Handle error cases
-  //       console.error("Error:", response.status, response.statusText);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error:", error.message);
-  //   }
-  // };
+  const submit = async () => {
+    try {
+      // const api = "http://localhost:3001/login";
+      const response = await axios.post("http://192.168.1.10:3001/login", {
+        email: email,
+        password: password,
+      });
+
+      if (response.ok) {
+        const jsonResponse = await response.json();
+        setResponseData(jsonResponse);
+        console.log(jsonResponse);
+        navigate("DrawerGroup");
+      } else {
+        // Handle error cases
+        console.error("Error:", response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error("Error:", error.message);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -103,11 +99,7 @@ const SignIn = () => {
             />
             <Text style={styles.txt}>Remember me</Text>
           </View>
-          <Pressable
-            onPress={() => {
-              navigate("DrawerGroup");
-            }}
-          >
+          <Pressable onPress={submit}>
             <SignBtn text="Sign in" />
           </Pressable>
           <View style={styles.signupp}>

@@ -23,7 +23,7 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [responseData, setResponseData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const auth = FIREBASE_AUTH;
+  // const auth = FIREBASE_AUTH;
 
   // const signup = async () => {
   //   setLoading(true);
