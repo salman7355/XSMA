@@ -35,12 +35,12 @@ const SignIn = () => {
   //   } finally {
   //     setLoading(false);
   //   }
-  // };
+  // };fl;lfsfaf'madf;lmfa
 
   const submit = async () => {
     try {
       // const api = "http://localhost:3001/login";
-      const response = await axios.post("http://192.168.1.10:3001/login", {
+      const response = await axios.post("http://localhost:3001/login", {
         email: email,
         password: password,
       });
@@ -54,8 +54,8 @@ const SignIn = () => {
         // Handle error cases
         console.error("Error:", response.status, response.statusText);
       }
-    } catch (error) {
-      console.error("Error:", error.message);
+    } catch (err) {
+      console.error("Error:", err.message);
     }
   };
 
