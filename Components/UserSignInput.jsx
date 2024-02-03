@@ -1,7 +1,9 @@
 import { Image, StyleSheet, Text, View, TextInput } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 
 const UserSignInput = ({ text }) => {
+  const [input, setInput] = useState("");
+  // console.log(input);
   return (
     <View style={styles.emailContainer}>
       <Text style={[styles.label, styles.txt]}>{text}</Text>
@@ -9,6 +11,7 @@ const UserSignInput = ({ text }) => {
         style={[styles.input, styles.txt]}
         placeholder={`Enter your ${text}`}
         placeholderTextColor="#DEE4E7"
+        onChangeText={setInput}
       />
     </View>
   );

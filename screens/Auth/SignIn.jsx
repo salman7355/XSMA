@@ -1,11 +1,68 @@
-import { Image, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import {
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+} from "react-native";
+import React, { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import SignBtn from "../../Components/SignBtn";
 import UserSignInput from "../../Components/UserSignInput";
+import { useNavigation } from "@react-navigation/native";
+import { FIREBASE_AUTH } from "../../FirebaseConfig";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const SignIn = () => {
+  const { navigate } = useNavigation();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [responseData, setResponseData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const auth = FIREBASE_AUTH;
+
+  const signin = async () => {
+    setLoading(true);
+    try {
+      const res = await signInWithEmailAndPassword(auth, email, password);
+      console.log(res);
+      navigate("DrawerGroup");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // const submit = async () => {
+  //   try {
+  //     // const api = "http://localhost:3001/login";
+  //     const response = await fetch("http://192.168.1.10:3000/login", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         email: email,
+  //         password: password,
+  //       }),
+  //     });
+  //     if (response.ok) {
+  //       const jsonResponse = await response.json();
+  //       setResponseData(jsonResponse);
+  //       console.log(jsonResponse);
+  //       navigate("DrawerGroup");
+  //     } else {
+  //       // Handle error cases
+  //       console.error("Error:", response.status, response.statusText);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error:", error.message);
+  //   }
+  // };
+
   return (
     <View style={styles.container}>
       <View style={styles.loginLogo}>
@@ -19,8 +76,25 @@ const SignIn = () => {
         style={styles.loginDetails}
       >
         <View style={styles.login}>
-          <UserSignInput text="Email" />
-          <UserSignInput text="Password" />
+          <View style={styles.emailContainer}>
+            <Text style={[styles.label, styles.txt]}>Email</Text>
+            <TextInput
+              style={[styles.input, styles.txt]}
+              placeholder={`Enter your Email`}
+              placeholderTextColor="#DEE4E7"
+              onChangeText={setEmail}
+            />
+          </View>
+          <View style={styles.emailContainer}>
+            <Text style={[styles.label, styles.txt]}>Password</Text>
+            <TextInput
+              style={[styles.input, styles.txt]}
+              placeholder={`Enter your Password`}
+              placeholderTextColor="#DEE4E7"
+              onChangeText={setPassword}
+            />
+          </View>
+
           <View style={styles.remember}>
             <MaterialCommunityIcons
               name="checkbox-blank-outline"
@@ -29,12 +103,21 @@ const SignIn = () => {
             />
             <Text style={styles.txt}>Remember me</Text>
           </View>
-          <SignBtn text="Sign in" />
+          <Pressable onPress={signin}>
+            <SignBtn text="Sign in" />
+          </Pressable>
           <View style={styles.signupp}>
             <Text style={[styles.signuptxt, styles.txt]}>
               Don't have an account?
             </Text>
-            <Text style={styles.signuptxt}>Sign up fo free!</Text>
+            <Text
+              onPress={() => {
+                navigate("SignUp");
+              }}
+              style={styles.signuptxt}
+            >
+              Sign up fo free!
+            </Text>
           </View>
         </View>
       </LinearGradient>
@@ -92,5 +175,23 @@ const styles = StyleSheet.create({
     alignContent: "center",
     justifyContent: "center",
     gap: 8,
+  },
+  emailContainer: {
+    gap: 10,
+  },
+  txt: {
+    color: "#DEE4E7",
+  },
+  label: {
+    fontSize: 14,
+    fontWeight: "500",
+  },
+  input: {
+    width: 315,
+    borderWidth: 1,
+    height: 50,
+    borderRadius: 15,
+    paddingLeft: 20,
+    borderColor: "#DEE4E7",
   },
 });

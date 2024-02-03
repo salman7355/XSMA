@@ -1,13 +1,42 @@
-import { Image, StyleSheet, Text, View, TextInput } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  Pressable,
+} from "react-native";
 import React, { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import SignBtn from "../../Components/SignBtn";
 import UserSignInput from "../../Components/UserSignInput";
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
+import { useNavigation } from "@react-navigation/native";
+import { FIREBASE_AUTH } from "../../FirebaseConfig";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const SignUp = () => {
+  const { navigate } = useNavigation();
   const [image, setImage] = useState(null);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [responseData, setResponseData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const auth = FIREBASE_AUTH;
+
+  const signup = async () => {
+    setLoading(true);
+    try {
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+      console.log(res);
+      navigate("SignIn");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -59,9 +88,35 @@ const SignUp = () => {
               </View>
             )}
           </View>
-          <UserSignInput text="Name" />
-          <UserSignInput text="Email" />
-          <UserSignInput text="Password" />
+          {/* <UserSignInput text="Name" /> */}
+          <View style={styles.emailContainer}>
+            <Text style={[styles.label, styles.txt]}>Name</Text>
+            <TextInput
+              style={[styles.input, styles.txt]}
+              placeholder={`Enter your Name`}
+              placeholderTextColor="#DEE4E7"
+            />
+          </View>
+          {/* <UserSignInput text="Email" /> */}
+          <View style={styles.emailContainer}>
+            <Text style={[styles.label, styles.txt]}>Email</Text>
+            <TextInput
+              style={[styles.input, styles.txt]}
+              placeholder={`Enter your Email`}
+              placeholderTextColor="#DEE4E7"
+              onChangeText={setEmail}
+            />
+          </View>
+          {/* <UserSignInput text="Password" /> */}
+          <View style={styles.emailContainer}>
+            <Text style={[styles.label, styles.txt]}>Password</Text>
+            <TextInput
+              style={[styles.input, styles.txt]}
+              placeholder={`Enter your Password`}
+              placeholderTextColor="#DEE4E7"
+              onChangeText={setPassword}
+            />
+          </View>
 
           {/* image Picker */}
           {/* <View style={styles.emailContainer}>
@@ -72,13 +127,22 @@ const SignUp = () => {
               placeholderTextColor="#DEE4E7"
             />
           </View> */}
-          <SignBtn text="Sign up" />
-          {/* <View style={styles.signupp}>
+          <Pressable onPress={signup}>
+            <SignBtn text="Sign up" />
+          </Pressable>
+          <View style={styles.signupp}>
             <Text style={[styles.signuptxt, styles.txt]}>
               Already have an account !!
             </Text>
-            <Text style={styles.signuptxt}>Sign in</Text>
-          </View> */}
+            <Text
+              onPress={() => {
+                navigate("SignIn");
+              }}
+              style={styles.signuptxt}
+            >
+              Sign in
+            </Text>
+          </View>
         </View>
       </LinearGradient>
     </View>
@@ -169,5 +233,23 @@ const styles = StyleSheet.create({
     alignContent: "center",
     justifyContent: "center",
     gap: 8,
+  },
+  emailContainer: {
+    gap: 10,
+  },
+  txt: {
+    color: "#DEE4E7",
+  },
+  label: {
+    fontSize: 14,
+    fontWeight: "500",
+  },
+  input: {
+    width: 315,
+    borderWidth: 1,
+    height: 50,
+    borderRadius: 15,
+    paddingLeft: 20,
+    borderColor: "#DEE4E7",
   },
 });

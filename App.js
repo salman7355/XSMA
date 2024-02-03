@@ -1,9 +1,5 @@
-import Navigation from "./Navigation";
-import SignUp from "./screens/Auth/SignUp";
+import Navigation from "./Navigations/Navigation";
 
 export default function App() {
-  return (
-    // <Navigation />
-    <SignUp />
-  );
+  return <Navigation />;
 }
