@@ -13,8 +13,8 @@ import UserSignInput from "../../Components/UserSignInput";
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import { useNavigation } from "@react-navigation/native";
-import { FIREBASE_AUTH } from "../../FirebaseConfig";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+// import { FIREBASE_AUTH } from "../../FirebaseConfig";
+// import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const SignUp = () => {
   const { navigate } = useNavigation();
@@ -25,18 +25,18 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const auth = FIREBASE_AUTH;
 
-  const signup = async () => {
-    setLoading(true);
-    try {
-      const res = await createUserWithEmailAndPassword(auth, email, password);
-      console.log(res);
-      navigate("SignIn");
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const signup = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const res = await createUserWithEmailAndPassword(auth, email, password);
+  //     console.log(res);
+  //     navigate("SignIn");
+  //   } catch (error) {
+  //     console.log(error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -127,7 +127,7 @@ const SignUp = () => {
               placeholderTextColor="#DEE4E7"
             />
           </View> */}
-          <Pressable onPress={signup}>
+          <Pressable>
             <SignBtn text="Sign up" />
           </Pressable>
           <View style={styles.signupp}>

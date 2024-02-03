@@ -12,8 +12,8 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import SignBtn from "../../Components/SignBtn";
 import UserSignInput from "../../Components/UserSignInput";
 import { useNavigation } from "@react-navigation/native";
-import { FIREBASE_AUTH } from "../../FirebaseConfig";
-import { signInWithEmailAndPassword } from "firebase/auth";
+// import { FIREBASE_AUTH } from "../../FirebaseConfig";
+// import { signInWithEmailAndPassword } from "firebase/auth";
 
 const SignIn = () => {
   const { navigate } = useNavigation();
@@ -21,20 +21,20 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
   const [responseData, setResponseData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const auth = FIREBASE_AUTH;
+  // const auth = FIREBASE_AUTH;
 
-  const signin = async () => {
-    setLoading(true);
-    try {
-      const res = await signInWithEmailAndPassword(auth, email, password);
-      console.log(res);
-      navigate("DrawerGroup");
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const signin = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const res = await signInWithEmailAndPassword(auth, email, password);
+  //     console.log(res);
+  //     navigate("DrawerGroup");
+  //   } catch (error) {
+  //     console.log(error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   // const submit = async () => {
   //   try {
@@ -103,7 +103,11 @@ const SignIn = () => {
             />
             <Text style={styles.txt}>Remember me</Text>
           </View>
-          <Pressable onPress={signin}>
+          <Pressable
+            onPress={() => {
+              navigate("DrawerGroup");
+            }}
+          >
             <SignBtn text="Sign in" />
           </Pressable>
           <View style={styles.signupp}>
