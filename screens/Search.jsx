@@ -6,30 +6,32 @@ import {
   TextInput,
   View,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import MovieSearchCard from "../Components/MovieSearchCard";
 import SearchNotFound from "../Components/SearchNotFound";
+import { API_KEY } from "@env";
 
 const Search = () => {
-  const notfound = false;
-  const arr = [
-    {
-      id: 1,
-    },
-    {
-      id: 2,
-    },
-    {
-      id: 3,
-    },
-    {
-      id: 4,
-    },
-    {
-      id: 5,
-    },
-  ];
+  const [word, setWord] = useState("");
+  const [movies, setMovies] = useState(null);
+
+  const filter = async () => {
+    try {
+      const res = await fetch(
+        `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&query=${word}`
+      );
+      const { results } = await res.json();
+      setMovies(results);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    filter();
+  }, [word]);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.searchBar}>
@@ -38,24 +40,25 @@ const Search = () => {
           style={styles.textInput}
           placeholder="Search..."
           placeholderTextColor="#DEE4E7"
+          onChangeText={setWord}
         />
       </View>
-      <View>
-        <Text style={[styles.textInput, styles.txt]}>Top Searches</Text>
-        {notfound ? (
-          <SearchNotFound />
-        ) : (
+      {movies && movies.length >= 1 ? (
+        <View>
+          <Text style={[styles.textInput, styles.txt]}>Top Searches</Text>
           <View>
             <FlatList
-              data={arr}
+              data={movies}
               renderItem={(item) => (
-                <MovieSearchCard btnHidden={true} movie={item.item.id} />
+                <MovieSearchCard btnHidden={true} movie={item.item} />
               )}
               keyExtractor={(item) => item.id}
             />
           </View>
-        )}
-      </View>
+        </View>
+      ) : (
+        <SearchNotFound />
+      )}
     </SafeAreaView>
   );
 };

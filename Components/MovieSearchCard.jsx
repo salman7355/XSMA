@@ -5,26 +5,38 @@ import { Ionicons } from "@expo/vector-icons";
 
 const MovieSearchCard = ({ btnHidden, movie }) => {
   const { navigate } = useNavigation();
+  let movieId = movie["id"];
+
   return (
     <View style={styles.movie}>
       <Pressable
         onPress={() => {
-          navigate("MovieDetails", { movie });
+          navigate("MovieDetails", { movieId });
         }}
         style={styles.imgContainer}
       >
         <Image
-          source={require("../assets/Rectangle 57.png")}
+          source={{
+            uri: `https://image.tmdb.org/t/p/w500/${movie["poster_path"]}`,
+          }}
           style={styles.img}
         />
       </Pressable>
       <View style={styles.imgDetails}>
         <View>
-          <Text style={[styles.txtColor, styles.title]}>Madaari</Text>
-          <Text style={[styles.txtColor, styles.yearandGenre]}>2016</Text>
-          <Text style={[styles.txtColor, styles.yearandGenre]}>
-            Genre : Drama, Thriller
+          <Text
+            numberOfLines={5}
+            ellipsizeMode="tail"
+            style={[styles.txtColor, styles.title]}
+          >
+            {movie["original_title"]}
           </Text>
+          <Text style={[styles.txtColor, styles.yearandGenre]}>
+            {movie["release_date"]}
+          </Text>
+          {/* <Text style={[styles.txtColor, styles.yearandGenre]}>
+            Genre : Drama, Thriller
+          </Text> */}
         </View>
         {!btnHidden && (
           <View style={styles.btn}>
@@ -46,7 +58,7 @@ export default MovieSearchCard;
 const styles = StyleSheet.create({
   movie: {
     flexDirection: "row",
-    gap: 40,
+    gap: 20,
     alignItems: "flex-start",
     paddingBottom: 30,
   },
@@ -65,10 +77,15 @@ const styles = StyleSheet.create({
   imgDetails: {
     justifyContent: "space-between",
     gap: 60,
+    height: 180,
+    width: 200,
+
+    // backgroundColor: "white",
   },
   title: {
     fontSize: 20,
     fontWeight: "600",
+    paddingBottom: 5,
   },
   yearandGenre: {
     fontSize: 10,

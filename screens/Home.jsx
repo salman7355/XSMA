@@ -2,7 +2,6 @@ import { StyleSheet, View, FlatList } from "react-native";
 import React from "react";
 import Category from "../Components/Category";
 import Poster from "../Components/Poster";
-import { API_KEY } from "@env";
 
 const Home = () => {
   const VertArr = [

@@ -24,23 +24,6 @@ const Category = ({ index, name, apiName }) => {
     fetchCategories(apiName);
   }, []);
 
-  const Arr = [
-    {
-      id: 1,
-    },
-    {
-      id: 2,
-    },
-    {
-      id: 3,
-    },
-    {
-      id: 4,
-    },
-    {
-      id: 5,
-    },
-  ];
   return (
     categoryy && (
       <View style={styles.category}>
@@ -58,7 +41,7 @@ const Category = ({ index, name, apiName }) => {
         <FlatList
           showsHorizontalScrollIndicator={false}
           horizontal={true}
-          data={Arr}
+          data={categoryy}
           renderItem={(item) => (
             <MovieCard
               movie={item.index}
